@@ -92,22 +92,27 @@ git clone http://anongit.freedesktop.org/git/xorg/lib/libX11.git
 git clone http://anongit.freedesktop.org/git/startup-notification.git
 git clone https://github.com/i3/i3.git
 git clone https://github.com/i3/i3status.git
+git clone https://github.com/i3/i3lock.git
 
 ## Build an updated pkgconfig
 cd /src/pkg-config
 git checkout pkg-config-0.28
-./autogen.sh
-./configure --enable-static=yes --enable-shared=no --with-internal-glib
+./autogen.sh --with-internal-glib
+# ./configure --enable-static=yes --enable-shared=no --with-internal-glib
 make && sudo make install && hash -r
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig
+export ACLOCAL_PATH=/usr/local/share/aclocal-1.11:/usr/local/share/aclocal
+export ACLOCAL_FLAGS="-I /usr/local/share/aclocal"
+# export LD_LIBRARY_PATH=/usr/local/lib/:/usr/local/lib64/
+# export LD_RUN_PATH=/usr/local/lib/:/usr/local/lib64/
 
 # glib
 cd /src/glib
 git checkout 2.33.14
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # Macros
@@ -115,7 +120,7 @@ cd /src/macros
 git checkout util-macros-1.18.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # proto
@@ -123,7 +128,7 @@ cd /src/proto
 git checkout 1.11
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # pthread-stubs
@@ -131,7 +136,7 @@ cd /src/pthread-stubs
 git checkout 0.3
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # xproto
@@ -139,7 +144,7 @@ cd /src/xproto/
 git checkout xproto-7.0.28
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # libXau
@@ -147,7 +152,7 @@ cd /src/libXau/
 git checkout libXau-1.0.8
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # libxcb
@@ -155,7 +160,7 @@ cd /src/libxcb/
 git checkout 1.11
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # xcb-util
@@ -163,7 +168,7 @@ cd /src/xcb-util
 git checkout 0.4.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # xkbcommon
@@ -171,7 +176,7 @@ cd /src/libxkbcommon/
 git checkout xkbcommon-0.5.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # util-render
@@ -179,7 +184,7 @@ cd /src/util-renderutil/
 git checkout 0.3.9
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # util-image
@@ -187,7 +192,7 @@ cd /src/util-image/
 git checkout 0.4.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # util-cursor
@@ -195,7 +200,7 @@ cd /src/util-cursor/
 git checkout 0.1.2
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # util-wm
@@ -203,7 +208,7 @@ cd /src/util-wm
 git checkout 0.3.8
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # util-keysyms
@@ -211,7 +216,7 @@ cd /src/util-keysyms
 git checkout 0.4.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # libev
@@ -219,51 +224,53 @@ make && sudo make install
 cd /src/libev
 git checkout rel-4.19
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-autoreconf -v --install
-./configure --enable-static=yes --enable-shared=no
+autoreconf -v --install && ./configure
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # yajl
 cd /src/yajl
 git checkout 2.1.0
-./configure --enable-static=yes --enable-shared=no
+./configure
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # pcre
 cd /src/pcre
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no && make && sudo make install
+./configure && make && sudo make install
+# ./configure --enable-static=yes --enable-shared=no && make && sudo make install
 
 # pixman
 cd /src/pixman
 git checkout pixman-0.30.2
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
-make && sudo make install
-
-# freetype2
-cd /src/freetype2
-git checkout VER-2-6-2
-export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-./autogen.sh && ./configure --enable-static=yes --enable-shared=no
-make && sudo make install
-
-# fontconfig
-cd /src/fontconfig
-git checkout 2.10.95
-export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-./autogen.sh --enable-libxml2
-./configure --enable-static=yes --enable-shared=no --disable-docs --enable-libxml2
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # png
 cd /src/libpng
 git checkout v1.2.55
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+./autogen.sh && ./configure
+# ./configure --enable-static=yes --enable-shared=no
+make && sudo make install
+
+# freetype2
+cd /src/freetype2
+git checkout VER-2-6-2
+ACLOCAL='' ./autogen.sh && ./configure
+# ./autogen.sh && ./configure --enable-static=yes --enable-shared=no
+make && sudo make install
+
+# fontconfig
+cd /src/fontconfig
+git checkout 2.10.95
+export ACLOCAL="aclocal -I /usr/local/share/aclocal"
+./autogen.sh --enable-libxml2 --disable-docs
+# ./configure --enable-static=yes --enable-shared=no --disable-docs --enable-libxml2
 make && sudo make install
 
 # cairo
@@ -271,19 +278,20 @@ cd /src/cairo
 git checkout 1.14.4
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # harfbuzz
 cd /src/harfbuzz-1.1.1
-./configure --enable-static=yes --enable-shared=no && make && sudo make install
+# ./configure --enable-static=yes --enable-shared=no && make && sudo make install
+./configure && make && sudo make install
 
 # pango
 cd /src/pango
 git checkout 1.36.8
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 patch -p 1 <<'EOH'
 diff --git a/tests/markup-parse.c b/tests/markup-parse.c
 index e9cb6a5..04521d0 100644
@@ -335,7 +343,7 @@ cd /src/libxtrans
 git checkout xtrans-1.3.5
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # xextproto
@@ -363,7 +371,7 @@ cd /src/libX11
 git checkout libX11-1.6.3
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # libsn
@@ -371,10 +379,21 @@ cd /src/startup-notification
 git checkout STARTUP_NOTIFICATION_0_12
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-./configure --enable-static=yes --enable-shared=no
+# ./configure --enable-static=yes --enable-shared=no
 make && sudo make install
 
 # i3
 cd /src/i3
 git checkout 4.11
-make i3_LIBS='-L/usr/local/lib -lxkbcommon -lxcb -lyajl_s -lev -lxkbcommon-x11 -lxcb-keysyms -lstartup-notification-1 -lxcb-icccm -lxcb-util -lxcb-xkb -lxcb-randr -lxcb-cursor -lxcb-xinerama -lm -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lX11-xcb -lxcb-render -lxcb-render-util -lxcb-image -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lffi -lpixman-1 -lxcb-shm -lxml2 -lglib-2.0' i3_config_wizard_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxkbcommon -lxkbcommon-x11 -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lxcb-xkb -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lpthread -lffi -lxml2 -lrt' i3_msg_LIBS='-L/usr/local/lib -lyajl_s -lxcb -lXau -lxcb-util' i3_input_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_nagbar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3bar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lev -lyajl_s -lxcb-xkb -lXau -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_dump_log_LIBS='-L/usr/local/lib -lxcb -lxcb-util -lXau' && sudo make install
+# make i3_LIBS='-L/usr/local/lib -lxkbcommon -lxcb -lyajl_s -lev -lxkbcommon-x11 -lxcb-keysyms -lstartup-notification-1 -lxcb-icccm -lxcb-util -lxcb-xkb -lxcb-randr -lxcb-cursor -lxcb-xinerama -lm -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lX11-xcb -lxcb-render -lxcb-render-util -lxcb-image -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lffi -lpixman-1 -lxcb-shm -lxml2 -lglib-2.0' i3_config_wizard_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxkbcommon -lxkbcommon-x11 -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lxcb-xkb -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lpthread -lffi -lxml2 -lrt' i3_msg_LIBS='-L/usr/local/lib -lyajl_s -lxcb -lXau -lxcb-util' i3_input_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_nagbar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3bar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lev -lyajl_s -lxcb-xkb -lXau -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_dump_log_LIBS='-L/usr/local/lib -lxcb -lxcb-util -lXau' && sudo make install
+make && sudo make install
+
+# i3Status
+# cd /src/i3status
+# git checkout 2.9
+# make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
+
+# i3Lock
+# cd /src/i3lock
+# git checkout 2.7
+# make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
