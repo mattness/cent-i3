@@ -196,11 +196,11 @@ sudo yum install -y xcb-util-devel
 sudo yum install -y xcb-util-image-devel
 
 # util-cursor
-# cd /src/util-cursor/
-# git checkout 0.0.99
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
+cd /src/util-cursor/
+git checkout 0.1.0
+export ACLOCAL="aclocal -I /usr/local/share/aclocal"
+./autogen.sh
+make && sudo make install
 
 # # util-wm
 # cd /src/util-wm
@@ -271,18 +271,20 @@ export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 # ./autogen.sh --enable-libxml2 --disable-docs --disable-docs --enable-libxml2
 # make && sudo make install
 
-# # cairo
-# cd /src/cairo
-# git checkout 1.14.4
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
+sudo yum install -y freetype-devel fontconfig-devel libpng-devel pixman-devel
+
+# cairo
+cd /src/cairo
+git checkout 1.12.2
+export ACLOCAL="aclocal -I /usr/local/share/aclocal"
+./autogen.sh
+make && sudo make install
 
 # # harfbuzz
 # cd /src/harfbuzz-1.1.1 && make && sudo make install
 # ./configure && make && sudo make install
 
-# # pango
+# pango
 cd /src/pango
 git checkout 1.30.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
@@ -379,6 +381,9 @@ sudo yum install -y startup-notification-devel
 # util-keysyms
 sudo yum install -y xcb-util-keysyms-devel
 
+# util-wm-devel
+sudo yum install -y xcb-util-wm-devel
+
 # i3
 cd /src/i3
 git checkout 4.8
@@ -396,7 +401,7 @@ make && sudo make install
 # make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
 
 sudo yum install -y epel-release
-sudo yum groupinstall -y 'X Window System'
+sudo yum groupinstall -y 'X Window System' 'Fonts'
 sudo yum install -y xorg-x11-xdm rxvt-unicode-256color dmenu
 
 sudo tee /usr/local/bin/i3 <<'EOH' > /dev/null
