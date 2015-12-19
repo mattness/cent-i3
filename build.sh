@@ -7,7 +7,8 @@ sudo yum install -y man vim curl git gcc gcc-c++ svn autoconf automake \
   libtool make patch gperf cmake gettext bison gtk-doc libffi-devel \
   zlib-devel libXau-devel libxcb-devel xcb-util-devel xcb-util-image-devel \
   ruby freetype-devel fontconfig-devel libpng-devel pixman-devel \
-  startup-notification-devel xcb-util-keysyms-devel xcb-util-wm-devel
+  startup-notification-devel xcb-util-keysyms-devel xcb-util-wm-devel \
+  pcre-devel
 
 sudo mkdir -p -m 775 /src && sudo chown root:vagrant /src && cd $_
 
@@ -27,7 +28,7 @@ git clone https://github.com/lloyd/yajl.git
 # curl -s http://github.com/lloyd/yajl/tarball/2.1.0 | tar zxf -
 
 #######################################################
-svn co svn://vcs.exim.org/pcre/code/tags/pcre-8.12 pcre
+# svn co svn://vcs.exim.org/pcre/code/tags/pcre-8.12 pcre
 #######################################################
 
 git clone http://anongit.freedesktop.org/git/cairo
@@ -39,8 +40,6 @@ git clone https://github.com/i3/i3status.git
 # curl -s https://github.com/i3/i3status/archive/2.8.tar.gz | tar zxf -
 git clone https://github.com/i3/i3lock.git
 # curl -s https://github.com/i3/i3lock/archive/2.6.tar.gz | tar zxf -
-
-curl -sO http://download.virtualbox.org/virtualbox/5.0.10/VBoxGuestAdditions_5.0.10.iso
 
 ## Build an updated pkgconfig
 cd /src/pkg-config
@@ -88,10 +87,10 @@ git checkout 2.0.4
 make && sudo make install
 
 # pcre
-cd /src/pcre
-export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-./autogen.sh
-./configure && make && sudo make install
+# cd /src/pcre
+# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
+# ./autogen.sh
+# ./configure && make && sudo make install
 
 # cairo
 cd /src/cairo
@@ -143,6 +142,8 @@ EOH
 sudo chmod +x /usr/local/bin/i3
 sudo sed -i 's%Exec=i3%Exec=/usr/local/bin/i3%' /usr/share/xsessions/i3.desktop
 sudo sed -i 's/id:3/id:5/' /etc/inittab
+
+# curl -sO http://download.virtualbox.org/virtualbox/5.0.10/VBoxGuestAdditions_5.0.10.iso
 # sudo mount /src/VBoxGuestAdditions_5.0.10.iso -o loop /mnt
 # sudo /mnt/VBoxLinuxAdditions.run
 sudo reboot
