@@ -3,39 +3,13 @@
 # Exit on first error
 set -e
 
-# sudo yum install -y man vim curl git perl-devel libcurl-devel \
-#   openssl-devel zlib-devel gperf cmake \
-#   asciidoc xmlto startup-notification-devel gtk-doc \
-#   libpng-devel freetype-devel libxml2-devel \
-#   docbook-utils-pdf libffi-devel libXext-devel \
-#   libX11-devel
 sudo yum install -y man vim curl git gcc gcc-c++ svn autoconf automake \
   libtool make patch gperf cmake gettext bison gtk-doc libffi-devel \
-  zlib-devel
-  # libxml2-devel gtk-doc
-
-# sudo yum groupinstall -y "X Window System"
-# sudo yum groupinstall -y "Desktop Platform Development"
-
-# git clone git://github.com/mattness/dotfiles.git $HOME/.dotfiles
-# cp $HOME/.dotfiles/git/gitconfig.symlink{.example,}
-# $HOME/.dotfiles/install <<<'O'
+  zlib-devel libXau-devel libxcb-devel xcb-util-devel xcb-util-image-devel \
+  ruby freetype-devel fontconfig-devel libpng-devel pixman-devel \
+  startup-notification-devel xcb-util-keysyms-devel xcb-util-wm-devel
 
 sudo mkdir -p -m 775 /src && sudo chown root:vagrant /src && cd $_
-
-# Build a modern Git
-# git clone git://github.com/gitster/git-manpages.git
-# git clone git://github.com/git/git.git
-# cd git
-# git checkout v2.6.3
-# make configure
-# ./configure --prefix=/usr/local
-# make
-# sudo make install quick-install-man
-# sudo ln -s /src/git/contrib/completion/git-completion.bash /etc/profile.d/git-completion.sh
-# sudo ln -s /src/git/contrib/completion/git-prompt.sh /etc/profile.d/git-prompt.sh
-# sudo yum remove -y git
-# hash -r
 
 # Build i3
 cd /src
@@ -45,55 +19,28 @@ git clone https://git.gnome.org/browse/glib
 # curl -s http://ftp.gnome.org/pub/gnome/sources/glib/2.33/glib-2.33.14.tar.xz
 git clone http://anongit.freedesktop.org/git/xorg/util/macros.git
 # curl -s http://xorg.freedesktop.org/releases/individual/util/util-macros-1.18.0.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xcb/proto.git
-# curl -s http://xcb.freedesktop.org/dist/xcb-proto-1.11.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xcb/pthread-stubs.git
-# curl -s http://xcb.freedesktop.org/dist/libpthread-stubs-0.3.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xorg/proto/xproto.git
-# curl -s http://xorg.freedesktop.org/releases/individual/proto/xproto-7.0.28.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xorg/lib/libXau.git
-# curl -s http://xorg.freedesktop.org/releases/individual/lib/libXau-1.0.8.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xcb/libxcb.git
-# curl -s http://xcb.freedesktop.org/dist/libxcb-1.11.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xcb/util.git /src/xcb-util --recursive
-# curl -s http://xcb.freedesktop.org/dist/xcb-util-0.4.0.tar.gz | tar zxf -
-git clone https://github.com/xkbcommon/libxkbcommon.git
-git clone http://anongit.freedesktop.org/git/xcb/util-renderutil.git --recursive
-# curl -s http://xcb.freedesktop.org/dist/xcb-util-renderutil-0.3.9.tar.gz | tar zxf -
-git clone http://anongit.freedesktop.org/git/xcb/util-image.git --recursive
-# http://xcb.freedesktop.org/dist/xcb-util-image-0.4.0.tar.gz
 git clone http://anongit.freedesktop.org/git/xcb/util-cursor.git --recursive
 # http://xcb.freedesktop.org/dist/xcb-util-cursor-0.1.2.tar.gz
-git clone http://anongit.freedesktop.org/git/xcb/util-wm.git --recursive
-# http://xcb.freedesktop.org/dist/xcb-util-wm-0.3.8.tar.gz
-git clone http://anongit.freedesktop.org/git/xcb/util-keysyms.git --recursive
-# http://xcb.freedesktop.org/dist/xcb-util-keysyms-0.4.0.tar.gz
 git clone http://git.lighttpd.net/libev.git
 # curl -s http://dist.schmorp.de/libev/Attic/libev-4.19.tar.gz | tar zxf -
 git clone https://github.com/lloyd/yajl.git
-# http://github.com/lloyd/yajl/tarball/2.1.0
+# curl -s http://github.com/lloyd/yajl/tarball/2.1.0 | tar zxf -
+
+#######################################################
 svn co svn://vcs.exim.org/pcre/code/tags/pcre-8.12 pcre
-git clone http://anongit.freedesktop.org/git/pixman.git
-# http://cairographics.org/releases/pixman-0.30.2.tar.gz
-git clone git://git.sv.nongnu.org/freetype/freetype2.git
-# http://download.savannah.gnu.org/releases/freetype/freetype-2.6.2.tar.gz
-git clone http://anongit.freedesktop.org/git/fontconfig
-# http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.10.95.tar.gz
-git clone http://git.code.sf.net/p/libpng/code libpng
-# ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng12/libpng-1.2.54.tar.gz
+#######################################################
+
 git clone http://anongit.freedesktop.org/git/cairo
 # http://cairographics.org/releases/cairo-1.14.4.tar.xz
-curl -s http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.1.1.tar.bz2 | tar jxf -
 git clone git://git.gnome.org/pango
-git clone http://anongit.freedesktop.org/git/xorg/lib/libxtrans.git
-git clone http://anongit.freedesktop.org/git/xorg/proto/xextproto.git
-git clone http://anongit.freedesktop.org/git/xorg/proto/kbproto.git
-git clone http://anongit.freedesktop.org/git/xorg/proto/inputproto.git
-git clone http://anongit.freedesktop.org/git/xorg/lib/libX11.git
-git clone http://anongit.freedesktop.org/git/startup-notification.git
 git clone https://github.com/i3/i3.git
+# curl -s https://github.com/i3/i3/archive/4.8.tar.gz | tar zxf -
 git clone https://github.com/i3/i3status.git
+# curl -s https://github.com/i3/i3status/archive/2.8.tar.gz | tar zxf -
 git clone https://github.com/i3/i3lock.git
+# curl -s https://github.com/i3/i3lock/archive/2.6.tar.gz | tar zxf -
+
+curl -sO http://download.virtualbox.org/virtualbox/5.0.10/VBoxGuestAdditions_5.0.10.iso
 
 ## Build an updated pkgconfig
 cd /src/pkg-config
@@ -104,8 +51,6 @@ make && sudo make install && hash -r
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib64/pkgconfig:/usr/share/pkgconfig
 export ACLOCAL_PATH=/usr/local/share/aclocal-1.11:/usr/local/share/aclocal
 export ACLOCAL_FLAGS='-I /usr/local/share/aclocal'
-# export LD_LIBRARY_PATH=/usr/local/lib/:/usr/local/lib64/
-# export LD_RUN_PATH=/usr/local/lib/:/usr/local/lib64/
 
 # glib
 cd /src/glib
@@ -121,104 +66,12 @@ export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
 make && sudo make install
 
-# proto
-# cd /src/proto
-# git checkout 1.10
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# pthread-stubs
-# cd /src/pthread-stubs
-# git checkout 0.3
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# xproto
-# cd /src/xproto/
-# git checkout xproto-7.0.28
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# # libXau
-# cd /src/libXau/
-# git checkout libXau-1.0.8
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-sudo yum install -y libXau-devel
-
-# XDMCP
-# sudo yum install -y libXdmcp-devel
-
-# libxcb
-# cd /src/libxcb/
-# git checkout 1.10
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-sudo yum install -y libxcb-devel
-
-# # xcb-util
-# cd /src/xcb-util
-# git checkout 0.4.0
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-#
-# make && sudo make install
-sudo yum install -y xcb-util-devel
-# sudo yum install -y xkeyboard-config{,-devel}
-# sudo yum install -y xorg-x11-xkb-utils{,-devel}
-
-# xkbcommon
-# cd /src/libxkbcommon/
-# git checkout xkbcommon-0.5.0
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# util-render
-# cd /src/util-renderutil/
-# git checkout 0.3.9
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# util-image
-# cd /src/util-image/
-# git checkout 0.4.0
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-#
-# make && sudo make install
-sudo yum install -y xcb-util-image-devel
-
 # util-cursor
 cd /src/util-cursor/
 git checkout 0.1.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
 make && sudo make install
-
-# # util-wm
-# cd /src/util-wm
-# git checkout 0.3.8
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-#
-# make && sudo make install
-# sudo yum install -y xcb-util-wm-devel
-
-# # util-keysyms
-# cd /src/util-keysyms
-# git checkout 0.4.0
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-#
-# make && sudo make install
-# sudo yum install -y xcb-util-keysyms-devel
 
 # libev
 # cd /src/libev-4.19
@@ -227,9 +80,6 @@ git checkout rel-4.11
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 autoreconf -v --install && ./configure
 make && sudo make install
-
-# ruby
-sudo yum install -y ruby
 
 # yajl
 cd /src/yajl
@@ -243,36 +93,6 @@ export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
 ./configure && make && sudo make install
 
-# # pixman
-# cd /src/pixman
-# git checkout pixman-0.30.2
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# # png
-# cd /src/libpng
-# git checkout v1.2.55
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh && ./configure
-# make && sudo make install
-
-# # freetype2
-# cd /src/freetype2
-# git checkout VER-2-6-2
-# ACLOCAL='' ./autogen.sh && ./configure
-# # ./autogen.sh && ./configure --enable-static=yes --enable-shared=no
-# make && sudo make install
-
-# # fontconfig
-# cd /src/fontconfig
-# git checkout 2.10.95
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh --enable-libxml2 --disable-docs --disable-docs --enable-libxml2
-# make && sudo make install
-
-sudo yum install -y freetype-devel fontconfig-devel libpng-devel pixman-devel
-
 # cairo
 cd /src/cairo
 git checkout 1.12.2
@@ -280,135 +100,49 @@ export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
 make && sudo make install
 
-# # harfbuzz
-# cd /src/harfbuzz-1.1.1 && make && sudo make install
-# ./configure && make && sudo make install
-
 # pango
 cd /src/pango
 git checkout 1.30.0
 export ACLOCAL="aclocal -I /usr/local/share/aclocal"
 ./autogen.sh
-# patch -p 1 <<'EOH'
-# diff --git a/tests/markup-parse.c b/tests/markup-parse.c
-# index e9cb6a5..04521d0 100644
-# --- a/tests/markup-parse.c
-# +++ b/tests/markup-parse.c
-# @@ -228,7 +228,7 @@ main (int argc, char *argv[])
-
-#        return 0;
-#      }
-# -
-# +/*
-#    path = g_test_build_filename (G_TEST_DIST, "markups", NULL);
-#    dir = g_dir_open (path, 0, &error);
-#    g_free (path);
-# @@ -244,6 +244,6 @@ main (int argc, char *argv[])
-#        g_free (path);
-#      }
-#    g_dir_close (dir);
-# -
-# +*/
-#    return g_test_run ();
-#  }
-# diff --git a/tests/test-layout.c b/tests/test-layout.c
-# index fffc963..514a163 100644
-# --- a/tests/test-layout.c
-# +++ b/tests/test-layout.c
-# @@ -522,7 +522,7 @@ main (int argc, char *argv[])
-
-#        return 0;
-#      }
-# -
-# +/*
-#    path = g_test_build_filename (G_TEST_DIST, "layouts", NULL);
-#    dir = g_dir_open (path, 0, &error);
-#    g_free (path);
-# @@ -538,6 +538,6 @@ main (int argc, char *argv[])
-#        g_free (path);
-#      }
-#    g_dir_close (dir);
-# -
-# +*/
-#    return g_test_run ();
-#  }
-# EOH
 make && sudo make install
-
-# libxtrans
-# cd /src/libxtrans
-# git checkout xtrans-1.3.5
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# # xextproto
-# cd /src/xextproto
-# git checkout xextproto-7.3.0
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# # kbproto
-# cd /src/kbproto
-# git checkout kbproto-1.0.7
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-
-# # inputproto
-# cd /src/inputproto
-# git checkout inputproto-2.3.1
-# ./autogen.sh
-# make && sudo make install
-
-# libX11
-# cd /src/libX11
-# git checkout libX11-1.6.3
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-# sudo yum install -y libX11-devel
-
-# libsn
-# cd /src/startup-notification
-# git checkout STARTUP_NOTIFICATION_0_12
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# make && sudo make install
-sudo yum install -y startup-notification-devel
-
-# util-keysyms
-sudo yum install -y xcb-util-keysyms-devel
-
-# util-wm-devel
-sudo yum install -y xcb-util-wm-devel
 
 # i3
 cd /src/i3
 git checkout 4.8
-# make i3_LIBS='-L/usr/local/lib -lxkbcommon -lxcb -lyajl_s -lev -lxkbcommon-x11 -lxcb-keysyms -lstartup-notification-1 -lxcb-icccm -lxcb-util -lxcb-xkb -lxcb-randr -lxcb-cursor -lxcb-xinerama -lm -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lX11-xcb -lxcb-render -lxcb-render-util -lxcb-image -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lffi -lpixman-1 -lxcb-shm -lxml2 -lglib-2.0' i3_config_wizard_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxkbcommon -lxkbcommon-x11 -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lxcb-xkb -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lpthread -lffi -lxml2 -lrt' i3_msg_LIBS='-L/usr/local/lib -lyajl_s -lxcb -lXau -lxcb-util' i3_input_LIBS='-L/usr/local/lib -lxcb -lxcb-keysyms -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_nagbar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3bar_LIBS='-L/usr/local/lib -lxcb -lxcb-randr -lxcb-util -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lcairo -lXau -lpangoft2-1.0 -lfontconfig -lfreetype -lgmodule-2.0 -lpixman-1 -lxcb-render -lxcb-shm -lev -lyajl_s -lxcb-xkb -lXau -lglib-2.0 -lffi -lpthread -lxml2 -lrt' i3_dump_log_LIBS='-L/usr/local/lib -lxcb -lxcb-util -lXau' && sudo make install
 make && sudo make install
 
 # i3Status
 # cd /src/i3status
-# git checkout 2.9
+# git checkout 2.8
 # make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
 
 # i3Lock
 # cd /src/i3lock
-# git checkout 2.7
+# git checkout 2.6
 # make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
 
+# Extra stuff for testing
+
 sudo yum install -y epel-release
-sudo yum groupinstall -y 'X Window System' 'Fonts'
-sudo yum install -y xorg-x11-xdm rxvt-unicode-256color dmenu
+sudo yum groupinstall -y 'X Window System' 'Fonts' 'Desktop Platform'
+sudo yum install -y gdm rxvt-unicode-256color dmenu
+sudo yum install -y kernel-devel
+
+# sudo tee /etc/sysconfig/desktop <<'EOH' > /dev/null
+# DISPLAYMANAGER=XDM
+# EOH
 
 sudo tee /usr/local/bin/i3 <<'EOH' > /dev/null
 #!/bin/bash
 
 export LD_LIBRARY_PATH=/usr/local/lib
-/usr/bin/i3-with-shmlog
+/usr/bin/i3
 EOH
 
 sudo chmod +x /usr/local/bin/i3
+sudo sed -i 's%Exec=i3%Exec=/usr/local/bin/i3%' /usr/share/xsessions/i3.desktop
+sudo sed -i 's/id:3/id:5/' /etc/inittab
+# sudo mount /src/VBoxGuestAdditions_5.0.10.iso -o loop /mnt
+# sudo /mnt/VBoxLinuxAdditions.run
+sudo reboot
