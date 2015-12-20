@@ -101,14 +101,16 @@ git checkout 4.8
 make && sudo make install
 
 # i3Status
-# cd /src/i3status
-# git checkout 2.8
-# make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
+cd /src/i3status
+git checkout 2.9
+# Use the static-linked version of libyajl so we don't need a wrapper script
+sed -i 's/LIBS+=-lyajl/LIBS+=-lyajl_s/' Makefile
+make && sudo make install
 
 # i3Lock
 # cd /src/i3lock
 # git checkout 2.6
-# make PREFIX=/opt/i3 && sudo make install PREFIX=/opt/i3
+# make && sudo make install
 
 # Extra stuff for testing
 
