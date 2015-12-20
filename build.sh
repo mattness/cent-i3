@@ -26,11 +26,6 @@ git clone http://git.lighttpd.net/libev.git
 # curl -s http://dist.schmorp.de/libev/Attic/libev-4.19.tar.gz | tar zxf -
 git clone https://github.com/lloyd/yajl.git
 # curl -s http://github.com/lloyd/yajl/tarball/2.1.0 | tar zxf -
-
-#######################################################
-# svn co svn://vcs.exim.org/pcre/code/tags/pcre-8.12 pcre
-#######################################################
-
 git clone http://anongit.freedesktop.org/git/cairo
 # http://cairographics.org/releases/cairo-1.14.4.tar.xz
 git clone git://git.gnome.org/pango
@@ -86,12 +81,6 @@ git checkout 2.0.4
 ./configure
 make && sudo make install
 
-# pcre
-# cd /src/pcre
-# export ACLOCAL="aclocal -I /usr/local/share/aclocal"
-# ./autogen.sh
-# ./configure && make && sudo make install
-
 # cairo
 cd /src/cairo
 git checkout 1.12.2
@@ -124,13 +113,9 @@ make && sudo make install
 # Extra stuff for testing
 
 sudo yum install -y epel-release
-sudo yum groupinstall -y 'X Window System' 'Fonts' 'Desktop Platform'
+sudo yum groupinstall -y 'X Window System' 'Fonts'
 sudo yum install -y gdm rxvt-unicode-256color dmenu
 sudo yum install -y kernel-devel
-
-# sudo tee /etc/sysconfig/desktop <<'EOH' > /dev/null
-# DISPLAYMANAGER=XDM
-# EOH
 
 sudo tee /usr/local/bin/i3 <<'EOH' > /dev/null
 #!/bin/bash
@@ -139,7 +124,14 @@ export LD_LIBRARY_PATH=/usr/local/lib
 /usr/bin/i3
 EOH
 
-sudo chmod +x /usr/local/bin/i3
+sudo tee /usr/local/bin/i3-with-shmlog <<'EOH' > /dev/null
+#!/bin/bash
+
+export LD_LIBRARY_PATH=/usr/local/lib
+/usr/bin/i3-with-shmlog
+EOH
+
+sudo chmod +x /usr/local/bin/i3{,-with-shmlog}
 sudo sed -i 's%Exec=i3%Exec=/usr/local/bin/i3%' /usr/share/xsessions/i3.desktop
 sudo sed -i 's/id:3/id:5/' /etc/inittab
 
